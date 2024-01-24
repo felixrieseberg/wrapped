@@ -46,18 +46,20 @@ const HighlightStories: StoryFunc = (data, config) => {
     );
 
     stories.unshift({
+      duration: 120000,
       content: (props) => (
-        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20">
+        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20 flex flex-col flex-auto">
           <p className={`${homemadeApple.className} text-8xl mb-10 mt-10`}>
             Thank You
           </p>
-          <Image
-            className="mt-16"
-            src="/backgrounds/peace.png"
-            width={320}
-            height={192}
-            alt="Think"
-          />
+          <div className="shrink grow relative">
+            <Image
+              src="/backgrounds/peace.png"
+              objectFit="contain"
+              fill={true}
+              alt="Think"
+            />
+          </div>
           <p className="mt-16">
             To close things out, a few highlights from all of us on{" "}
             {config.teamName} today - {firstNames}.

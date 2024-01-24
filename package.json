@@ -24,6 +24,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-insta-stories": "^2.6.2",
+    "react-responsive": "^9.0.2",
     "skin-tone": "^4.0.0"
   },
   "devDependencies": {
@@ -41,7 +42,7 @@
     "fs-extra": "^11.1.1",
     "node-emoji": "^2.1.3",
     "ora": "^8.0.1",
-    "postcss": "^8",
+    "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.1",

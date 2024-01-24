@@ -12,7 +12,7 @@ export default async function Wrapped() {
 
   return (
     <div className="container w-full h-full">
-      <div className="flex flex-wrap justify-center content-center h-screen">
+      <div className="flex flex-wrap justify-center content-center h-full">
         <Stories data={data} config={config} />
       </div>
     </div>

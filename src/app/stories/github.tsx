@@ -28,7 +28,7 @@ const GitHubStories: StoryFunc = (data, config) => {
 };
 
 const TeamCreation: StoryFunc = (data, config) => {
-  const { git, github, teamTotals } = data;
+  const { teamTotals } = data;
   const additionComparison = findClosestNumberComparison(
     teamTotals.github?.additions || 0,
   );
@@ -176,7 +176,7 @@ const TopWriter: StoryFunc = (data, config) => {
     {
       duration: 12000,
       content: (props) => (
-        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20">
+        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20 flex flex-col flex-auto">
           <p className={`${homemadeApple.className} text-2xl`}>
             We are thinkers,
             <br />
@@ -187,14 +187,16 @@ const TopWriter: StoryFunc = (data, config) => {
             {totalWords} words. {totalComparison.name} has{" "}
             {n(totalComparison.count)} words.
           </p>
-          <Image
-            className="mt-5 mx-auto"
-            src="/backgrounds/think.png"
-            width={320}
-            height={288}
-            alt="Think"
-          />
-          <p className="mt-5">
+          <div className="shrink grow relative">
+            <Image
+              className="mt-5 mx-auto shrink w-full h-auto"
+              src="/backgrounds/think.png"
+              objectFit="contain"
+              fill={true}
+              alt="Think"
+            />
+          </div>
+          <p className="mt-10">
             <span className="font-semibold">{writer}</span> is our{" "}
             <span>top writer</span> and poured {writerWords} words into their
             PRs - about as much as {writerComparison.name} with{" "}

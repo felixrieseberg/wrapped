@@ -24,9 +24,7 @@ const configOption = new Option(
   "path to config file",
 ).default(COMMON_DEFAULTS.config);
 
-program
-  .name("wrapped")
-  .version(packageJson.version);
+program.name("wrapped").version(packageJson.version);
 
 program
   .command("create")

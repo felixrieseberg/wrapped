@@ -17,7 +17,7 @@ const BarChart: React.FC<BarChartComponentProps> = ({
   const maxValue = Math.max(...Object.values(data));
 
   return (
-    <div>
+    <div className="mx-10 mt-5">
       {Object.entries(data).map(([day, value]) => (
         <div
           key={day}
@@ -29,7 +29,7 @@ const BarChart: React.FC<BarChartComponentProps> = ({
             style={{
               width: `${(value / maxValue) * 100}%`,
               textAlign: "right",
-              padding: "10px",
+              padding: "5px",
             }}
           >
             {value}

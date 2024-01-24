@@ -123,7 +123,7 @@ const ChannelSummaries: StoryFunc = (data, config) => {
             </p>
             <BarChart
               data={channelData.messageCountByDay!}
-              barClassName="bg-white text-black"
+              barClassName="bg-white text-black w-1/2"
             />
           </div>
         ),
