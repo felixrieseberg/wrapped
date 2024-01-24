@@ -4,9 +4,12 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import Config from "../../config.json";
+import { titleCase } from "./helpers/title-case";
+
 export const metadata: Metadata = {
-  title: "Notion Wrapped",
-  description: "A silly wrapped for FY 2023",
+  title: `${titleCase(Config.periodName)} Wrapped for ${Config.teamName}`,
+  description: `A silly wrapped`,
 };
 
 export default function RootLayout({

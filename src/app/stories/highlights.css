@@ -1,0 +1,17 @@
+.ken-burns-bg {
+  background-size: cover;
+  background-position: center;
+  animation: kenBurnsZoom 20s infinite;
+  /* Adjust time as needed */
+}
+
+@keyframes kenBurnsZoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.2);
+    /* Adjust scaling as needed */
+  }
+}

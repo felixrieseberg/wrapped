@@ -4,6 +4,7 @@ import { MessageElement } from "@slack/web-api/dist/types/response/Conversations
 import type { Config } from "./data/config";
 import { Channel } from "@slack/web-api/dist/types/response/ConversationsListResponse";
 import { User } from "@slack/web-api/dist/types/response/UsersLookupByEmailResponse";
+import { Profile } from "@slack/web-api/dist/types/response/UsersProfileGetResponse";
 
 export type StoryFunc = (data: DataLight, config: Config) => Story[];
 
@@ -12,16 +13,43 @@ export interface CommonOptions {
   config: string;
 }
 
+export type SlackChannelLight = Omit<SlackChannel, "messages" | "channel">;
+export type SlackUserLight = Pick<User, "name" | "real_name">;
+export type GitHubDataLight = Omit<
+  GitHubData,
+  "pulls" | "pullsReviewed" | "pullsCommentedOn"
+>;
+export interface SlackDataLight {
+  channels: Record<string, SlackChannelLight>;
+  emoji: Record<string, string>;
+}
+
+/**
+ * Data as used by the web app
+ */
+export interface DataLight {
+  github: Record<string, GitHubDataLight>;
+  git: Record<string, GitData>;
+  slack: SlackDataLight;
+  teamTotals: {
+    github?: GitHubTeamTotals;
+  };
+  teamLeaders: {
+    github?: GitHubLeaders;
+  };
+  createdOn: string;
+}
+
+/**
+ * Data as used by the cli
+ */
 export interface Data {
   github: Record<string, GitHubData>;
   git: Record<string, GitData>;
-  slack: {
-    channels: Record<string, SlackData>;
-    users: Record<string, User>;
-    emoji: Record<string, string>;
-  };
+  slack: SlackData;
   teamTotals: {
     github?: GitHubTeamTotals;
+    slack?: SlackTotals;
   };
   teamLeaders: {
     github?: GitHubLeaders;
@@ -29,26 +57,26 @@ export interface Data {
   createdOn?: Date;
 }
 
-export interface DataLight {
-  github: Record<
-    string,
-    Omit<GitHubData, "pulls" | "pullsReviewed" | "pullsCommentedOn">
-  >;
-  git: Record<string, GitData>;
-  teamTotals: {
-    github?: GitHubTeamTotals;
-  };
-  teamLeaders: {
-    github?: GitHubLeaders;
-  };
+export interface SlackTotals {
+  messages: number;
+  words: number;
+  reactions: number;
+  emojis: number;
 }
 
 export interface SlackData {
+  channels: Record<string, SlackChannel>;
+  users: Record<string, User>;
+  emoji: Record<string, string>;
+}
+
+export interface SlackChannel {
   channel: Channel;
   messages?: Array<SlackMessageWithReplies>;
-  topReaci?: Record<string, number>;
+  messageCount?: number;
+  reacji?: Record<string, number>;
   topPosters?: Record<string, number>;
-  emojis?: Record<string, number>;
+  emojis?: SlackEmoji;
   messageCountByDay?: Record<string, number>;
   dayWithMostMessages?: {
     day: string;
@@ -56,11 +84,16 @@ export interface SlackData {
   };
 }
 
+export interface SlackEmoji {
+  byCount: Record<string, number>;
+  byPerson: Record<string, Record<string, number>>;
+}
+
 export interface SlackMessageWithReplies extends MessageElement {
   replies?: Array<MessageElement>;
 }
 
-export type SavedSlackMessages = Required<SlackData>;
+export type SavedSlackMessages = Required<SlackChannel>;
 
 export interface GitData {
   linesChanged: number;

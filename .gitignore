@@ -37,5 +37,6 @@ next-env.d.ts
 
 config.json
 
-data
+/data
+/public/data
 public/emoji

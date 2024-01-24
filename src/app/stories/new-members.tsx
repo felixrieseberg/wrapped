@@ -44,13 +44,13 @@ const NewMembersStory: StoryFunc = (data, config) => {
               <br />
               <span className="text-5xl">{newPeopleNames}!</span>
             </p>
-            <p className="mt-[50px]">
+            <p className="mt-5">
               Proudly presenting
               <br />
               the newest members of {config.teamName}.<br />
               We&apos;re so happy you&apos;re here!
             </p>
-            <div className="mt-[20px] flex flex-row gap-10 w-full justify-center place-content-center">
+            <div className="mt-5 flex flex-row gap-5 w-full justify-center place-content-center">
               {newPeopleImages}
             </div>
           </div>

@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "notion-yellow": "#FAF3DD",
         "notion-orange": "#F8ECDF",
+        "notion-paper": "#f7f6f3"
       },
       container: {
         center: true,

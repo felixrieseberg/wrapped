@@ -4,7 +4,7 @@ import { Homemade_Apple } from "next/font/google";
 
 const homemadeApple = Homemade_Apple({ subsets: ["latin"], weight: "400" });
 
-const CoverStory: StoryFunc = (data, config) => {
+const OutroStory: StoryFunc = (data, config) => {
   const createdOn = new Date(data.createdOn).toLocaleDateString();
 
   return [
@@ -13,9 +13,8 @@ const CoverStory: StoryFunc = (data, config) => {
       content: (props) => (
         <div className="bg-notion-paper bg-cover w-full h-full flex flex-col justify-center place-items-center">
           <div className="w-full text-center text-black">
-            <p>Welcome to</p>
             <p className="">~ {config.periodName} ~</p>
-            <p className={`${homemadeApple.className} font-bold text-4xl`}>
+            <p className={`${homemadeApple.className} font-bold text-7xl`}>
               wrapped
             </p>
             <p>{`for ${config.teamName}`}</p>
@@ -36,4 +35,4 @@ const CoverStory: StoryFunc = (data, config) => {
   ];
 };
 
-export default CoverStory;
+export default OutroStory;

@@ -1,0 +1,26 @@
+.emoji-background {
+  width: 1000px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  filter: blur(5px);
+  white-space: nowrap;
+  text-wrap: wrap;
+  animation: slide 220s linear infinite;
+  font-size: 70px;
+  letter-spacing: -15px;
+  line-height: 50px;
+  opacity: 0.15;
+  position: absolute;
+  margin-left: -100px;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: scale(4);
+  }
+}

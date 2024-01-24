@@ -3,9 +3,13 @@ import chalk from "chalk";
 /**
  * Print a little mini table with a header column
  */
-export function outputMiniTable(rows: Array<Array<string>>) {
+export function outputMiniTable(rows: Array<Array<string>>, bump?: boolean) {
   const columns = rows[0].length;
   const widths = Array(columns).fill(0);
+
+  if (bump) {
+    console.log();
+  }
 
   for (const row of rows) {
     for (let i = 0; i < columns; i++) {
@@ -26,5 +30,9 @@ export function outputMiniTable(rows: Array<Array<string>>) {
     }
 
     console.log(text);
+  }
+
+  if (bump) {
+    console.log();
   }
 }

@@ -1,10 +1,11 @@
 import fs from "fs-extra";
+import path from "path";
 
 import Stories from "./stories/stories";
-import path from "path";
+
 import { loadConfig, Config } from "../data/config";
 import { getLightDataPath } from "../helpers/data-path";
-import { Data, DataLight } from "../interfaces";
+import { DataLight } from "../interfaces";
 
 export default async function Wrapped() {
   const { config, data } = await getConfigAndData();

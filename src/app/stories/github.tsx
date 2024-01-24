@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Story } from "react-insta-stories/dist/interfaces";
 import { Homemade_Apple, Rubik_Glitch, VT323 } from "next/font/google";
 
@@ -8,7 +9,6 @@ import {
   WORDS_FOR_FAMOUS_BOOKS,
 } from "../helpers/comparisons";
 import { joined, theyAlso } from "../helpers/joined";
-import { sum } from "../../helpers/sum";
 
 const homemadeApple = Homemade_Apple({ subsets: ["latin"], weight: "400" });
 const rubikGlitch = Rubik_Glitch({ subsets: ["latin"], weight: "400" });
@@ -36,7 +36,7 @@ const TeamCreation: StoryFunc = (data, config) => {
   return [
     {
       content: (props) => (
-        <div className="bg-[url('/backgrounds/coffee.png')] bg-cover w-full h-full flex place-items-center justify-center">
+        <div className="bg-notion-paper w-full h-full flex place-items-center justify-center">
           <div className="w-3/4 text-center text-black">
             <p>{`Together, ${config.teamName} hit the keyboard hard.`}</p>
             <div className="bg-black p-4 mt-[50px] text-white rounded-md drop-shadow-md -rotate-[4deg]">
@@ -50,7 +50,13 @@ const TeamCreation: StoryFunc = (data, config) => {
                 All up, we made {teamTotals.github?.pulls} pull requests!
               </p>
             </div>
-            <div className="mt-[370px]">
+            <Image
+              src="/backgrounds/coffee.png"
+              width={320}
+              height={217}
+              alt="Coffee mugs"
+            />
+            <div className="mt-5">
               <p>
                 By the way, the {additionComparison.name} project has{" "}
                 {n(additionComparison.count)} lines of code.
@@ -118,13 +124,20 @@ const TopFilesCommits: StoryFunc = (data, config) => {
   return [
     {
       content: (props) => (
-        <div className="bg-[url('/backgrounds/postit.png')] bg-cover w-full h-full flex place-items-center justify-center">
+        <div className="bg-notion-paper bg-cover w-full h-full flex place-items-center justify-center">
           <div className="w-3/4 text-center text-black">
-            <p className="mb-[300px]">
+            <p>
               <span className="font-semibold">{fileChanger}</span> changed the
               most files (in total, {nv(changedFiles)}).
             </p>
-            <p>
+            <Image
+              className="mt-10"
+              src="/backgrounds/postit.png"
+              width={300}
+              height={284}
+              alt="Postits"
+            />
+            <p className="mt-10">
               With {nv(commits)} commits,{" "}
               <span className="font-semibold">{committer}</span> pushed the most
               of us on {config.teamName}.
@@ -161,20 +174,27 @@ const TopWriter: StoryFunc = (data, config) => {
 
   return [
     {
-      duration: 9000,
+      duration: 12000,
       content: (props) => (
-        <div className="text-black text-center w-full h-full p-8 bg-cover bg-[url('/backgrounds/think.png')] pt-20">
+        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20">
           <p className={`${homemadeApple.className} text-2xl`}>
             We are thinkers,
             <br />
             we are writers
           </p>
           <p className="mt-[30px]">
-            Together, {config.teamName}&rsquo;s pull requests descriptions on
-            GitHub contained {totalWords} words. {totalComparison.name} has{" "}
+            Together, {config.teamName}&rsquo;s PR descriptions contained{" "}
+            {totalWords} words. {totalComparison.name} has{" "}
             {n(totalComparison.count)} words.
           </p>
-          <p className="mt-[350px]">
+          <Image
+            className="mt-5 mx-auto"
+            src="/backgrounds/think.png"
+            width={320}
+            height={288}
+            alt="Think"
+          />
+          <p className="mt-5">
             <span className="font-semibold">{writer}</span> is our{" "}
             <span>top writer</span> and poured {writerWords} words into their
             PRs - about as much as {writerComparison.name} with{" "}
@@ -204,7 +224,7 @@ const TopReviewer: StoryFunc = (data, config) => {
     {
       duration: 9000,
       content: (props) => (
-        <div className="text-black text-center w-full h-full p-8 bg-cover bg-[url('/backgrounds/peace.png')] pt-20">
+        <div className="text-black text-center w-full h-full p-8 bg-cover bg-notion-paper pt-20">
           <p className={`${homemadeApple.className} text-2xl`}>
             A thank you for all the reviews you&apos;ve done.
           </p>
@@ -212,9 +232,17 @@ const TopReviewer: StoryFunc = (data, config) => {
             {config.teamName} reviewed {n(teamTotals.github?.pullsReviewed)}{" "}
             unique PRs.
           </p>
-          <p className="mt-[350px]">
-            {reviewer} is our <span>top reviewer</span> and deserves special
-            thanks - they supported {nv(leaders.pullsReviewed)} PRs! {commenter}{" "}
+          <Image
+            className="mt-10"
+            src="/backgrounds/peace.png"
+            width={320}
+            height={192}
+            alt="Think"
+          />
+          <p className="mt-10">
+            <span className="font-bold">{reviewer}</span> is our{" "}
+            <span>top reviewer</span> and deserves special thanks - they
+            supported {nv(leaders.pullsReviewed)} PRs! {commenter}{" "}
             <span className="font-semibold">commented</span> on the most unique
             PRs ({nv(leaders.pullsCommentedOn)} in total).
           </p>
