@@ -5,7 +5,13 @@ It's fully configurable, meaning that you too can create a "Wrapped" for your te
 
 ## Setup
 
-First, clone this entire repository with `git clone https://github.com/felixrieseberg/wrapped`.
+First, clone this entire repository and install dependencies:
+
+```
+git clone https://github.com/felixrieseberg/wrapped`
+cd wrapped
+npm i
+```
 
 ### 1. Configuration
 
@@ -17,6 +23,73 @@ Below is an example file.
 <summary>Example for a `config.json`</summary>
 
 ```json
+{
+  "teamName": "Web Infra",
+  "from": "2023-02-01",
+  "to": "2024-02-01",
+  "periodName": "fiscal year 2023",
+  "people": [
+    {
+      "name": "Big Bird",
+      "github": "bigbird",
+      "highlight": {
+        "photo": "/data/bigbird_highlight.jpg"
+      }
+    },
+    {
+      "name": "Cookie Monster",
+      "github": "cookiemonster",
+      "new": true,
+      "photo": "/data/cookie.jpg",
+      "highlight": {
+        "photo": "/data/cookie_highlight.jpg",
+        "caption": "I got to enjoy a bunch of cookies during my vacation in Hawaii!",
+        "captionPosition": "top"
+      }
+    },
+    {
+      "name": "Count von Count",
+      "github": "countvcount",
+      "new": true,
+      "photo": "/data/count.jpg",
+      "highlight": {
+        "photo": "/data/count_highlight.jpg",
+        "caption": "Here's a picture of me at Glacier national park during road trip to Chicago!"
+      }
+    },
+    {
+      "name": "Elmo",
+      "github": "elmo",
+      "to": "2023-07-01"
+    },
+    {
+      "name": "Bert",
+      "github": "bert",
+      "excludeFromLeaderboard": true
+    }
+  ],
+  "folders": [
+    "src/desktop"
+  ],
+  "github": {
+    "token": "ghp_12345678...",
+    "owner": "makenotion",
+    "repo": "notion-next"
+  },
+  "slack": {
+    "token": "xoxp-123456...",
+    "channels": [
+      "eng-team-web-infra",
+      "eng-team-web-infra-triage"
+    ],
+    "ignoreEmoji": [
+      "github",
+      "link",
+      "v"
+    ]
+  },
+  "projects": ['My cool project A', 'My cool project B']
+}
 
 ```
 </details>

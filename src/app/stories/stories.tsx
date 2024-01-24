@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import SlackStories from "./slack";
 import HighlightStories from "./highlights";
 import OutroStory from "./outro";
+import ProjectsStory from "./projects";
 
 export interface StoriesProps {
   data: DataLight;
@@ -27,6 +28,7 @@ export default function Stories({ data, config }: StoriesProps) {
     ...NewMembersStory(data, config),
     ...SlackStories(data, config),
     ...GitHubStories(data, config),
+    ...ProjectsStory(data, config),
     ...HighlightStories(data, config),
     ...OutroStory(data, config),
   ];
@@ -53,7 +55,10 @@ export default function Stories({ data, config }: StoriesProps) {
     if (isTinyLandScape) {
       setWidth(defaultWidth);
       setHeight(defaultHeight);
-      setScale((window.innerHeight / defaultHeight) * 0.9);
+
+      if (window) {
+        setScale((window.innerHeight / defaultHeight) * 0.9);
+      }
     } else {
       setScale(1);
     }

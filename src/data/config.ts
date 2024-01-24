@@ -22,6 +22,8 @@ export interface Config {
   // Configure the Slack integration, which will fetch statistics about
   // messages and reactions.
   slack?: SlackConfig;
+  // Any projects you're proud of?
+  projects?: Array<string>;
 }
 
 export interface GitConfig {

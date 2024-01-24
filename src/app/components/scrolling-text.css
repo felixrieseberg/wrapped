@@ -1,0 +1,25 @@
+/* ScrollingText.css */
+.scroll-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.scroll-text {
+  position: absolute;
+  bottom: 0;
+  animation: scroll-up 10s linear infinite;
+  width: 130%;
+  animation: scroll-up 10s linear infinite;
+  left: -15%;
+}
+
+@keyframes scroll-up {
+  0% {
+    bottom: -1000%;
+  }
+
+  100% {
+    bottom: 0;
+  }
+}
