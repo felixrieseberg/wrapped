@@ -11,7 +11,7 @@ const ProjectsStory: StoryFunc = (data, config) => {
 
   return [
     {
-      duration: 3000,
+      duration: 9000,
       content: (props) => (
         <div className="bg-notion-paper bg-cover w-full h-full flex flex-col justify-center place-items-center">
           <div className="z-10 bg-black p-4 mt-[50%] text-white text-center rounded-md drop-shadow-md">

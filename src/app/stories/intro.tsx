@@ -28,9 +28,7 @@ const CoverStory: StoryFunc = (data, config) => {
             alt="Lofi girl"
           />
           <div className="w-full mt-14 text-center text-black">
-            <p>
-              Wrapped on {createdOn} {window.innerWidth}
-            </p>
+            <p>Wrapped on {createdOn}</p>
           </div>
         </div>
       ),

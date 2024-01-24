@@ -1,7 +1,6 @@
 "use client";
 
 import ReactInstaStories from "react-insta-stories";
-import { useMediaQuery } from "react-responsive";
 
 import CoverStory from "./intro";
 import DisclaimerStory from "./disclaimer";
@@ -15,6 +14,7 @@ import SlackStories from "./slack";
 import HighlightStories from "./highlights";
 import OutroStory from "./outro";
 import ProjectsStory from "./projects";
+import useScreenWidth from "../helpers/use-screen-size";
 
 export interface StoriesProps {
   data: DataLight;
@@ -33,13 +33,17 @@ export default function Stories({ data, config }: StoriesProps) {
     ...OutroStory(data, config),
   ];
 
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-  const isTinyLandScape = useMediaQuery({
-    query: "(max-height: 768px) and (orientation: landscape)",
-  });
+  const { windowWidth, windowHeight } = useScreenWidth();
+  const isMobile = windowWidth && windowHeight && windowWidth < 768;
+  const isTinyLandScape =
+    windowWidth &&
+    windowHeight &&
+    windowHeight < 768 &&
+    windowWidth > windowHeight;
   const defaultWidth = 432;
   const defaultHeight = 768;
 
+  const [hideOnMobile, setHideOnMobile] = useState(false);
   const [width, setWidth] = useState<number | string>(defaultWidth);
   const [height, setHeight] = useState<number | string>(defaultHeight);
   const [scale, setScale] = useState(1);
@@ -48,6 +52,7 @@ export default function Stories({ data, config }: StoriesProps) {
     if (isMobile) {
       setWidth(`100vw`);
       setHeight(`100dvh`);
+      setHideOnMobile(true);
     }
   }, [isMobile]);
 
@@ -65,7 +70,9 @@ export default function Stories({ data, config }: StoriesProps) {
   }, [isTinyLandScape]);
 
   return (
-    <div className={isMobile ? "" : "h-screen flex justify-center flex-col"}>
+    <div
+      className={hideOnMobile ? "" : "h-screen flex justify-center flex-col"}
+    >
       <ReactInstaStories
         stories={stories}
         defaultInterval={7000}
@@ -77,7 +84,7 @@ export default function Stories({ data, config }: StoriesProps) {
           transform: scale !== 1 ? `scale(${scale})` : undefined,
         }}
       />
-      {!isMobile && <ThankYou data={data} />}
+      {!hideOnMobile && <ThankYou data={data} />}
     </div>
   );
 }

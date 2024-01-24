@@ -8,7 +8,7 @@ It's fully configurable, meaning that you too can create a "Wrapped" for your te
 First, clone this entire repository and install dependencies:
 
 ```
-git clone https://github.com/felixrieseberg/wrapped`
+git clone https://github.com/felixrieseberg/wrapped
 cd wrapped
 npm i
 ```
@@ -88,7 +88,7 @@ Below is an example file.
       "v"
     ]
   },
-  "projects": ['My cool project A', 'My cool project B']
+  "projects": ["My cool project A", "My cool project B"]
 }
 
 ```

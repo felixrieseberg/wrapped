@@ -24,7 +24,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-insta-stories": "^2.6.2",
-    "react-responsive": "^9.0.2",
     "skin-tone": "^4.0.0"
   },
   "devDependencies": {
