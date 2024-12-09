@@ -14,7 +14,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cli": "ts-node-esm src/data/main.ts",
+    "cli": "tsx src/data/main.ts",
     "prettier": "prettier --write src/"
   },
   "dependencies": {
@@ -44,7 +44,7 @@
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "tailwindcss": "^3.3.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }

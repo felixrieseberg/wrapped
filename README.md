@@ -68,9 +68,12 @@ Below is an example file.
       "excludeFromLeaderboard": true
     }
   ],
-  "folders": [
-    "src/desktop"
-  ],
+  "git": {
+    "repoPath": "/Users/felix/code/notion-next",
+    "folders": [
+      "src/desktop"
+    ]
+  },
   "github": {
     "token": "ghp_12345678...",
     "owner": "makenotion",
