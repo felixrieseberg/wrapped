@@ -139,6 +139,13 @@ export async function loadConfig(configPath: string) {
     };
   });
 
+  // Verify that all photos exist
+  for (const person of people) {
+    if (person.photo && !fs.existsSync(person.photo)) {
+      throw new Error(`Photo not found at ${person.photo}`);
+    }
+  }
+
   return (CONFIG = {
     ...input,
     from: new Date(input.from),
