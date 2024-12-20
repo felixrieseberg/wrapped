@@ -21,7 +21,6 @@ interface SaveDataOptions {
 
 export let DATA: Data = {
   github: {},
-  git: {},
   slack: {
     channels: {},
     users: {},
@@ -148,6 +147,8 @@ export function getTotals(): GitHubTotals {
     pullsReviewed: [],
     pullsCommentedOn: [],
     wordsInPullBodies: [],
+    imagesInPullBodies: [],
+    imagesPerPullAvg: 0,
     additionsPerPullAvg: 0,
     deletionsPerPullAvg: 0,
     changedFilesPerPullAvg: 0,

@@ -29,7 +29,7 @@ export interface SlackDataLight {
  */
 export interface DataLight {
   github: Record<string, GitHubDataLight>;
-  git: Record<string, GitData>;
+  git?: GitData;
   slack: SlackDataLight;
   teamTotals: {
     github?: GitHubTeamTotals;
@@ -45,7 +45,7 @@ export interface DataLight {
  */
 export interface Data {
   github: Record<string, GitHubData>;
-  git: Record<string, GitData>;
+  git?: GitData;
   slack: SlackData;
   teamTotals: {
     github?: GitHubTeamTotals;
@@ -95,10 +95,39 @@ export interface SlackMessageWithReplies extends MessageElement {
 
 export type SavedSlackMessages = Required<SlackChannel>;
 
+export interface GitActivityStats {
+  mostActiveHour: {
+    hour: number;
+    commits: number;
+  };
+  mostActiveDay: {
+    day: string;
+    commits: number;
+  };
+}
+
+export interface GitCommitStats {
+  averageMessageLength: number;
+  coAuthoredCount: number;
+  coAuthorPairs: Record<string, number>;
+}
+
 export interface GitData {
+  commitAtFrom?: string;
+  commitAtTo?: string;
+  activityStats?: GitActivityStats;
+  commitStats?: GitCommitStats;
+  folders?: Record<string, GitFolderData>;
+}
+
+export interface GitFolderData {
   linesChanged: number;
-  commitAtFrom: string;
-  commitAtTo: string;
+  files: {
+    topFileTypes: Array<{
+      extension: string;
+      count: number;
+    }>;
+  };
 }
 
 export interface GitHubTestType {
@@ -119,10 +148,12 @@ export interface GitHubTotals {
   pullsReviewed: Array<number>;
   pullsCommentedOn: Array<number>;
   wordsInPullBodies: Array<number>;
+  imagesInPullBodies: Array<number>;
   additionsPerPullAvg: number;
   deletionsPerPullAvg: number;
   changedFilesPerPullAvg: number;
   wordsPerPullAvg: number;
+  imagesPerPullAvg: number;
   pullsTestedManually: Array<number>;
   pullsTestedClient: Array<number>;
   pullsTestedBrowser: Array<number>;
@@ -137,6 +168,7 @@ export interface GitHubTeamTotals {
   commits: number;
   pulls: number;
   wordsInPullBodies: number;
+  imagesInPullBodies: number;
   pullsReviewed: number;
   pullsCommentedOn: number;
   additionsPerPullAvg: number;

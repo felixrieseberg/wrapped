@@ -68,6 +68,13 @@ Below is an example file.
       "excludeFromLeaderboard": true
     }
   ],
+  "highlights": [
+    {
+      "photo": "/data/team_highlight.jpg",
+      "caption": "We had fun at the team offsite!",
+      "captionPosition": "top"
+    }
+  ],
   "git": {
     "repoPath": "/Users/felix/code/notion-next",
     "folders": [
@@ -119,6 +126,10 @@ The command line tools available are:
  - `npm run dev`: Build and run a local dev server
  - `npm run build`: Build an optimized production build
  - `npm run lint`: Run prettier
+
+### 4. Deployment
+
+Before deploying, I suggest removing the tokens from the config file.
 
 ### License
 

@@ -21,6 +21,7 @@ import { outputMiniTable } from "../../helpers/table.js";
 import { sum } from "../../helpers/sum.js";
 import { capitalize } from "../../helpers/capitalize.js";
 import { isCurrent } from "../../helpers/is-current.js";
+import { calculateImagesInString } from "../../helpers/calculate-images.js";
 
 export async function fetchGitHub(): Promise<void> {
   if (!CONFIG.github) {
@@ -181,6 +182,7 @@ function calculateTotals() {
       totals.commits += pull.commits;
       totals.pulls.push(pull.number);
       totals.wordsInPullBodies.push(calculateWordsInString(pull.body));
+      totals.imagesInPullBodies.push(calculateImagesInString(pull.body));
 
       const tests = getTestTypes(pull);
       if (tests.client) totals.pullsTestedClient.push(pull.number);
@@ -207,6 +209,7 @@ function calculateTotals() {
       pulls.map((p) => p.changedFiles),
     );
     totals.wordsPerPullAvg = calculateAverage(totals.wordsInPullBodies);
+    totals.imagesPerPullAvg = calculateAverage(totals.imagesInPullBodies);
   }
 }
 
@@ -325,6 +328,8 @@ const PRETTY_TITLES: Record<
   pullsCommentedOn: "Unique PRs commented on",
   wordsInPullBodies: "Words in PR bodies (total)",
   wordsPerPullAvg: "Words in PR bodies (avg)",
+  imagesInPullBodies: "Images in PR bodies (total)",
+  imagesPerPullAvg: "Images in PR bodies (avg)",
   additionsPerPullAvg: "+ lines per PR (avg)",
   deletionsPerPullAvg: "- lines per PR (avg)",
   changedFilesPerPullAvg: "Files changed per PR (avg)",
@@ -348,6 +353,8 @@ async function calculateLeaders(): Promise<GitHubLeaders> {
     pullsReviewed: { names: [], value: 0 },
     wordsInPullBodies: { names: [], value: 0 },
     wordsPerPullAvg: { names: [], value: 0 },
+    imagesInPullBodies: { names: [], value: 0 },
+    imagesPerPullAvg: { names: [], value: 0 },
     pullsCommentedOn: { names: [], value: 0 },
     additionsPerPullAvg: { names: [], value: 0 },
     deletionsPerPullAvg: { names: [], value: 0 },
@@ -401,6 +408,7 @@ async function calculateTeamTotals(): Promise<GitHubTeamTotals> {
     pulls: 0,
     pullsReviewed: 0,
     wordsInPullBodies: 0,
+    imagesInPullBodies: 0,
     pullsCommentedOn: 0,
     additions: 0,
     deletions: 0,

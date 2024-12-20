@@ -15,6 +15,7 @@ import HighlightStories from "./highlights";
 import OutroStory from "./outro";
 import ProjectsStory from "./projects";
 import useScreenWidth from "../helpers/use-screen-size";
+import GitStories from "./git";
 
 export interface StoriesProps {
   data: DataLight;
@@ -28,6 +29,7 @@ export default function Stories({ data, config }: StoriesProps) {
     ...NewMembersStory(data, config),
     ...SlackStories(data, config),
     ...GitHubStories(data, config),
+    ...GitStories(data, config),
     ...ProjectsStory(data, config),
     ...HighlightStories(data, config),
     ...OutroStory(data, config),
