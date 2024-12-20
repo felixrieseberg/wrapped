@@ -18,6 +18,7 @@ const SlackStories: StoryFunc = (data, config) => {
 
   const stories: Story[] = [
     ...EmojiCharts(data, config),
+    ...BufoCharts(data, config),
     ...ChannelSummaries(data, config),
   ];
 
@@ -31,15 +32,19 @@ const EmojiCharts: StoryFunc = (data, config) => {
     return [];
   }
 
+
   for (const channelName of config.slack.channels) {
     const channelData = data.slack.channels[channelName];
     const favoriteEmoji = getSortedEmoji(channelData.emojis!.byCount);
     const emojiList = EmojiList(favoriteEmoji, data);
+    const uniqueEmojis = new Set();
+    Object.keys(channelData.emojis!.byCount).forEach(emoji => uniqueEmojis.add(emoji));
 
     elements.push(
-      <div className="mb-[10px]">
+      <div className="mb-[30px]">
         <p className={`${homemadeApple.className} text-2xl`}>#{channelName}</p>
-        <div>{emojiList}</div>
+        <div className="mb-[10px]">{emojiList}</div>
+        <p className="text-sm text-gray-600">We used {uniqueEmojis.size} unique emojis in 2024</p>
       </div>,
     );
   }
@@ -52,6 +57,52 @@ const EmojiCharts: StoryFunc = (data, config) => {
           <div className="w-full h-full p-8 pt-20">
             <p className={`${homemadeApple.className} text-6xl`}>
               Emoji Charts
+            </p>
+            <p className="mb-[20px] text-2xl">{config.periodName}</p>
+            {elements}
+          </div>
+        </div>
+      ),
+    },
+  ];
+};
+
+const BufoCharts: StoryFunc = (data, config) => {
+  const elements: Array<JSX.Element> = [];
+
+  if (!config.slack) {
+    return [];
+  }
+
+  for (const channelName of config.slack.channels) {
+    const channelData = data.slack.channels[channelName];
+    const favoriteEmoji = getSortedEmoji(channelData.emojis!.byCount, 7, (emoji) => {
+      return emoji.startsWith("bufo")
+    });
+    const emojiList = EmojiList(favoriteEmoji, data);
+
+    // Count unique bufo emojis
+    const uniqueBufoCount = Object.keys(channelData.emojis!.byCount).filter(emoji => 
+      emoji.startsWith("bufo")
+    ).length;
+
+    elements.push(
+      <div className="mb-[30px]">
+        <p className={`${homemadeApple.className} text-2xl`}>#{channelName}</p>
+        <div className="mb-[10px]">{emojiList}</div>
+        <p className="text-sm text-gray-600">We used {uniqueBufoCount} unique bufos in 2024</p>
+      </div>,
+    );
+  }
+
+  return [
+    {
+      content: (props) => (
+        <div className="text-black text-center w-full h-full bg-cover bg-notion-paper">
+          <RandomEmojiBackground />
+          <div className="w-full h-full p-8 pt-20">
+            <p className={`${homemadeApple.className} text-6xl`}>
+              Bufo Charts
             </p>
             <p className="mb-[20px] text-2xl">{config.periodName}</p>
             {elements}
@@ -80,11 +131,25 @@ const ChannelSummaries: StoryFunc = (data, config) => {
     const dayWithMostMessages = formatDate(
       channelData.dayWithMostMessages!.day,
     );
-    const weekdayWithMostMessages = getWeekdayWithMostMessages(
-      channelData.messageCountByDay!,
-    );
     const favoriteReacji = getSortedEmoji(channelData.reacji!, 6);
     const reacjiList = EmojiList(favoriteReacji, data);
+    const topPostersWithoutBots: Record<string, number> = {};
+    const topPostersOnlyBots: Record<string, number> = {};
+
+    // Filter out bots
+    for (const [name, count] of Object.entries(channelData.topPosters!)) {
+      if (!(config.slack.ignoreBots || []).includes(name)) {
+        topPostersWithoutBots[name] = count;
+      } else {
+        topPostersOnlyBots[name] = count;
+      }
+    }
+
+    let botsContentsMaybe = <></>;
+
+    if (Object.keys(topPostersOnlyBots).length > 0) {
+      botsContentsMaybe = <p className="mt-[30px]">Our top 3 busiest bots were {recordToNameAndNumber(topPostersOnlyBots, "messages", 3)}.</p>;
+    }
 
     stories.push(
       {
@@ -99,8 +164,9 @@ const ChannelSummaries: StoryFunc = (data, config) => {
                 {n(channelData.messageCount)} messages
               </span>{" "}
               were written. The top 3 chatterbugs were{" "}
-              {recordToNameAndNumber(channelData.topPosters!, "messages", 3)}.
+              {recordToNameAndNumber(topPostersWithoutBots, "messages", 3)}.
             </p>
+            {botsContentsMaybe}
             <div>
               <p className={`mt-[30px] text-xl ${homemadeApple.className}`}>
                 Reacji Charts
@@ -182,11 +248,11 @@ function getWeekdayWithMostMessages(input: Record<string, number>): string {
   return sorted[0].day;
 }
 
-function getSortedEmoji(input: Record<string, number>, length: number = 7) {
+function getSortedEmoji(input: Record<string, number>, length: number = 7, filter: (emoji: string) => boolean = () => true) {
   const array = Object.entries(input).map(([emoji, count]) => ({
     emoji,
     count,
-  }));
+  })).filter(({ emoji }) => filter(emoji));
   const sorted = array.sort((a, b) => b.count - a.count);
   const top = sorted.slice(0, length);
 

@@ -40,3 +40,5 @@ config.json
 /data
 /public/data
 public/emoji
+public/avatars
+public/photos

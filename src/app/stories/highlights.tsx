@@ -40,6 +40,29 @@ const HighlightStories: StoryFunc = (data, config) => {
     });
   }
 
+  for (const highlight of config.highlights || []) {
+    const backgroundImage = `url(${highlight.photo})`;
+    const captionPosition = highlight.captionPosition === "top" ? "top-10" : "bottom-10";
+
+    const caption = highlight.caption ? <div className="bg-black text-white w-1/2 mx-auto p-1 pt-1.5 text-xs text-center rounded-md select-none">
+    {highlight.caption}
+  </div> : null;
+
+    stories.push({
+      content: (props) => (
+        <div className="w-full h-full">
+          <div
+            style={{ backgroundImage }}
+            className="ken-burns-bg bg-cover w-full h-full flex place-items-center justify-center content-center"
+          />
+          <div className={`w-full absolute ${captionPosition}`}>
+            {caption}
+          </div>
+        </div>
+      ),
+    });
+  }
+
   if (stories.length > 0) {
     const firstNames = joined(
       config.people.filter((p) => !p.to).map((p) => p.name.split(" ")[0]),

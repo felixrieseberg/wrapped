@@ -75,7 +75,7 @@ export default function Stories({ data, config }: StoriesProps) {
     >
       <ReactInstaStories
         stories={stories}
-        defaultInterval={7000}
+        defaultInterval={10000}
         width={width}
         height={height}
         keyboardNavigation={true}

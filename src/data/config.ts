@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-
+import path from "path";
 export interface Config {
   // What's the name of your team? Example: "Web Infra"
   teamName: string;
@@ -24,6 +24,8 @@ export interface Config {
   slack?: SlackConfig;
   // Any projects you're proud of?
   projects?: Array<string>;
+  // Any highlights you're proud of?
+  highlights?: Array<Highlight>;
 }
 
 export interface GitConfig {
@@ -76,6 +78,8 @@ export interface SlackConfig {
   // Maybe you have bots posting specific emoji, making the data a
   // little useless. You can ignore them here.
   ignoreEmoji: Array<string>;
+  // Maybe you have bots posting a lot and you want them to be excluded from the leaderboard.
+  ignoreBots: Array<string>;
 }
 
 export interface Person {
@@ -109,8 +113,11 @@ export interface Person {
   photo?: string;
   // If specified, we'll add a story for this person that features the
   // highlight photo as a background and displays a caption.
-  highlight?: {
-    // If the photo is placed in /public/photos/felix.jpg, you'd enter
+  highlight?: Highlight;
+}
+
+export interface Highlight {
+  // If the photo is placed in /public/photos/felix.jpg, you'd enter
     // "/photos/felix.jpg". You can also specify a URL.
     //
     // Example: "/photos/felix_highlight.jpg"
@@ -120,7 +127,6 @@ export interface Person {
     // If you want to position the caption at the top or bottom of the
     // image. "bottom" by default.
     captionPosition?: "top" | "bottom";
-  };
 }
 
 export let CONFIG: Config = {} as any;
@@ -141,8 +147,14 @@ export async function loadConfig(configPath: string) {
 
   // Verify that all photos exist
   for (const person of people) {
-    if (person.photo && !fs.existsSync(person.photo)) {
-      throw new Error(`Photo not found at ${person.photo}`);
+    if (!person.photo) {
+      continue;
+    }
+
+    const photoPath = path.join(process.cwd(), "public", person.photo);
+
+    if (person.photo && !fs.existsSync(photoPath)) {
+      throw new Error(`Photo not found at ${photoPath}`);
     }
   }
 
@@ -164,6 +176,7 @@ export async function loadConfig(configPath: string) {
           token: process.env.SLACK_TOKEN || input.slack.token,
           channels: input.slack.channels || [],
           ignoreEmoji: input.slack.ignoreEmoji || [],
+          ignoreBots: input.slack.ignoreBots || [],
         }
       : undefined,
   });

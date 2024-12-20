@@ -623,7 +623,7 @@ async function findEmojis(
     throw new Error(`Slack not configured`);
   }
 
-  const emojiRegex = /:\w+:/g;
+  const emojiRegex = /(?:^|[ ]):[\w-_]+:/g;
   const result: SlackEmoji = {
     byCount: {},
     byPerson: {},
@@ -640,7 +640,7 @@ async function findEmojis(
       }
 
       emojis.forEach((emoji) => {
-        const emojiName = emoji.replace(/:/g, "");
+        const emojiName = emoji.replace(/:/g, "").trim();
 
         // We ignore emoji that are just a number, because they're likely
         // just from a code snippet.
